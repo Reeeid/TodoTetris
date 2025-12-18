@@ -1,4 +1,4 @@
-package api
+package Todo
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	mdw.SupabaseJWT(TodoHandler)(w, r)
+	mdw.AuthJWT(TodoHandler)(w, r)
 
 }
 

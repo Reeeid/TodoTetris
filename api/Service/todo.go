@@ -1,4 +1,4 @@
-package service
+package Service
 
 import "net/http"
 
@@ -13,4 +13,9 @@ func UpdateTodo(w http.ResponseWriter, r *http.Request) {
 }
 func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	// Todo削除ロジックをここに実装
+}
+
+func GetSession(w http.ResponseWriter, r *http.Request) {
+	// セッション取得ロジックをここに実装
+	//スコアも含める
 }
