@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	mdw "github.com/Reeeid/TodoTetris/middleware"
-	svc "github.com/Reeeid/TodoTetris/service"
+	usecase "github.com/Reeeid/TodoTetris/usecase"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -15,13 +15,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 func TodoHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		svc.CreateTodo(w, r)
+		usecase.CreateTodo(w, r)
 	case http.MethodGet:
-		svc.GetTodos(w, r)
+		usecase.GetTodos(w, r)
 	case http.MethodPut:
-		svc.UpdateTodo(w, r)
+		usecase.UpdateTodo(w, r)
 	case http.MethodDelete:
-		svc.DeleteTodo(w, r)
+		usecase.DeleteTodo(w, r)
 	default:
 		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 	}

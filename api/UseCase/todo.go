@@ -1,4 +1,4 @@
-package Service
+package usecase
 
 import "net/http"
 
