@@ -1,20 +1,20 @@
 package infrastructure
 
-type UserRepo struct {
-	db DBprovider
+import "gorm.io/gorm"
+
+type UserRepoImpl struct {
+	db *gorm.DB
 }
 
-func NewUserRepo(db DBprovider) *UserRepo {
-	return &UserRepo{db: db}
+func NewUserRepo(db *gorm.DB) *UserRepoImpl {
+	return &UserRepoImpl{db: db}
 }
 
-func (u *UserRepo) CreateUser(username string, password string) (string, error) {
+func (u *UserRepoImpl) CreateUser(username string, password string) (string, error) {
+
 	return "nil", nil
 }
 
-func (u *UserRepo) GetUserByID(userID string, password string) error {
+func (u *UserRepoImpl) GetUserByID(userID string, password string) error {
 	return nil
-}
-func (u *UserRepo) CheckUserExists(username string) (bool, error) {
-	return false, nil
 }

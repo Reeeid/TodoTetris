@@ -14,7 +14,7 @@ func LoginUser(user *model.LoginUser) (string, error) {
 	//dbからユーザー情報取得
 	username, _ := user.Username, user.Password
 	//パスワード照合
-
+	//dbだるい！
 	//token発行
 
 	token, err := GenerateJWT(username, "your-secret-key")

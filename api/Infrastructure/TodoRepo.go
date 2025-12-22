@@ -1,26 +1,28 @@
 package infrastructure
 
-type TodoRepo struct {
-	db DBprovider
+import "gorm.io/gorm"
+
+type TodoRepoImpl struct {
+	db *gorm.DB
 }
 
-func NewTodoRepo(db DBprovider) *TodoRepo {
-	return &TodoRepo{db: db}
+func NewTodoRepo(db *gorm.DB) *TodoRepoImpl {
+	return &TodoRepoImpl{db: db}
 }
 
-func (t *TodoRepo) CreateTodo(userID string, title string, description string) (string, error) {
+func (t *TodoRepoImpl) CreateTodo(userID string, title string, description string) (string, error) {
 	// Implementation here
 	return "", nil
 }
-func (t *TodoRepo) GetTodo(todoID string) (map[string]interface{}, error) {
+func (t *TodoRepoImpl) GetTodo(todoID string) (map[string]interface{}, error) {
 	// Implementation here
 	return nil, nil
 }
-func (t *TodoRepo) UpdateTodo(todoID, title string, description string) error {
+func (t *TodoRepoImpl) UpdateTodo(todoID, title string, description string) error {
 	// Implementation here
 	return nil
 }
-func (t *TodoRepo) DeleteTodo(todoID string) error {
+func (t *TodoRepoImpl) DeleteTodo(todoID string) error {
 	// Implementation here
 	return nil
 }
