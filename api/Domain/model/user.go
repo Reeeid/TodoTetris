@@ -8,4 +8,12 @@ type (
 		PasswordHash string `json:"-"`                          // パスワードは絶対返さない
 		CreatedAt    time.Time
 	}
+	RegisterUser struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginUser struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
 )

@@ -1,4 +1,4 @@
-package Tetris
+package tetris
 
 import (
 	"net/http"

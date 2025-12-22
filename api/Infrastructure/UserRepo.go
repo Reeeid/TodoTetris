@@ -15,3 +15,6 @@ func (u *UserRepo) CreateUser(username string, password string) (string, error) 
 func (u *UserRepo) GetUserByID(userID string, password string) error {
 	return nil
 }
+func (u *UserRepo) CheckUserExists(username string) (bool, error) {
+	return false, nil
+}
