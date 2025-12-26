@@ -5,19 +5,43 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/Reeeid/TodoTetris/Domain/model"
+	"golang.org/x/crypto/bcrypt"
 )
 
-func LoginUser(user *model.LoginUser) (string, error) {
-	//dbからユーザー情報取得
-	username, _ := user.Username, user.Password
-	//パスワード照合
-	//dbだるい！
-	//token発行
+type UserUseCase struct {
+	repo UserRepository
+}
 
-	token, err := GenerateJWT(username, "your-secret-key")
+func NewUserUseCase(repo UserRepository) *UserUseCase {
+	if os.Getenv("SECRET_KEY") == "" {
+		panic("SECRET_KEY is not set! Critical error")
+	}
+	return &UserUseCase{repo: repo}
+}
+
+func (u *UserUseCase) RegisterUser(user *model.User) error {
+	hashed, err := bcrypt.GenerateFromPassword([]byte(user.PasswordHash), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.PasswordHash = string(hashed)
+	return u.repo.CreateUser(user)
+}
+
+func (u *UserUseCase) LoginUser(user *model.User) (string, error) {
+	_, result, err := u.repo.FindByUserID(user.Username)
+	if err != nil {
+		return "", err
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(result.PasswordHash), []byte(user.PasswordHash)); err != nil {
+		return "", fmt.Errorf("Not Authenticated")
+	}
+	token, err := GenerateJWT(user.Username, os.Getenv("SECRET_KEY"))
 	if err != nil {
 		return "", err
 	}
