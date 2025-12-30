@@ -7,13 +7,15 @@ import "github.com/Reeeid/TodoTetris/Domain/model"
 type CreateTodoRequest struct {
 	Subject     string `json:"subject"`
 	Description string `json:"description"`
+	UUID        string `json:"uuid"`
 }
 
-func (req *CreateTodoRequest) ToDomain(uuid string) *model.Todo {
+func (req *CreateTodoRequest) ToDomain(username string, UUID string) *model.Todo {
 	return &model.Todo{
 		Subject:     req.Subject,
 		Description: req.Description,
-		UUID:        uuid,
+		UUID:        UUID,
+		UserID:      username,
 	}
 }
 
@@ -29,14 +31,16 @@ type UpdateTodoRequest struct {
 	Description string `json:"description"`
 }
 
-func (req *UpdateTodoRequest) ToDomain() *model.Todo {
+func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
 	return &model.Todo{
 		ID:          req.ID,
+		UserID:      username,
 		Subject:     req.Subject,
 		Description: req.Description,
 	}
 }
 
+//アップデートTODOは差分適応用にTODORESPONSEを返す
 func ToTodoResponse(m *model.Todo) TodoResponse {
 	return TodoResponse{
 		ID:          m.ID,
@@ -45,9 +49,7 @@ func ToTodoResponse(m *model.Todo) TodoResponse {
 	}
 }
 
-type ReadTodoRequest struct {
-	IDs []int64 `json:"ids"`
-}
+//Get Todoのレスポンス　ユーザー名はミドルウェアからとって全部渡す
 
 type ReadTodoResponse struct {
 	Todos []TodoResponse `json:"todos"`
@@ -67,4 +69,15 @@ func ToReadTodoResponse(models []model.Todo) ReadTodoResponse {
 
 type DeleteTodoRequest struct {
 	UUIDs []string `json:"uuids"`
+}
+
+func (d *DeleteTodoRequest) ToDomain(username string) []model.Todo {
+	todos := make([]model.Todo, len(d.UUIDs))
+	for i, j := range d.UUIDs {
+		todos[i] = model.Todo{
+			UserID: username,
+			UUID:   j,
+		}
+	}
+	return todos
 }

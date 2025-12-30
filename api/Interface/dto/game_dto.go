@@ -2,8 +2,9 @@ package dto
 
 import "github.com/Reeeid/TodoTetris/Domain/model"
 
-type GameStatusResponse struct {
-	IsPlayed bool `json:"isplayed"`
+type TetrisResponse struct {
+	IsPlayed bool                     `json:"is_played"`
+	Session  *GameSessionLoadResponse `json:"session,omitempty"`
 }
 
 type GameSessionSaveRequest struct {
@@ -16,16 +17,23 @@ type GameSessionLoadResponse struct {
 	Score      int    `json:"Score"`
 }
 
-func (g *GameSessionSaveRequest) ToDomain() *model.Session {
+func (g *GameSessionSaveRequest) ToDomain(username string) *model.Session {
 	return &model.Session{
+		UserID:     username,
 		Score:      g.Score,
 		BoardState: g.BoardState,
 	}
 }
-
-func ToGameSessionResponse(m *model.Session) *GameSessionLoadResponse {
-	return &GameSessionLoadResponse{
-		Score:      m.Score,
-		BoardState: m.BoardState,
+func ToTetrisResponse(IsPlayed bool, m *model.Session) *TetrisResponse {
+	var session *GameSessionLoadResponse
+	if m != nil {
+		session = &GameSessionLoadResponse{
+			BoardState: m.BoardState,
+			Score:      m.Score,
+		}
+	}
+	return &TetrisResponse{
+		IsPlayed: IsPlayed,
+		Session:  session,
 	}
 }

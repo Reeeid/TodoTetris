@@ -14,7 +14,7 @@ import (
 
 type contextKey string
 
-var UserKey contextKey
+const UserKey contextKey = "username"
 
 func AuthJWT(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

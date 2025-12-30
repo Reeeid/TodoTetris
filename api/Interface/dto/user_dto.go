@@ -19,6 +19,9 @@ type LoginUserRequest struct {
 	PasswordHash string `json:"password"`
 }
 
-type LoginResponse struct {
-	Username string `json:"username"`
+func (l *LoginUserRequest) ToDomain() *model.User {
+	return &model.User{
+		Username:     l.Username,
+		PasswordHash: l.PasswordHash,
+	}
 }

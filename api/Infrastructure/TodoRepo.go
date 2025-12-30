@@ -55,8 +55,8 @@ func (t *TodoRepoImpl) UpdateTodo(todo *model.Todo) (*model.Todo, error) {
 
 func (t *TodoRepoImpl) DeleteTodo(todo *model.Todo) error {
 	userID := todo.UserID
-	id := todo.ID
-	if err := t.db.Where("id = ? AND user_id = ?", id, userID).Delete(&entity.Todo{}).Error; err != nil {
+	uuid := todo.UUID
+	if err := t.db.Where("uuid = ? AND user_id = ?", uuid, userID).Delete(&entity.Todo{}).Error; err != nil {
 		return err
 	}
 	return nil

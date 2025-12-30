@@ -94,7 +94,7 @@ func TestUserUseCase_RegisterUser(t *testing.T) {
 			u := &UserUseCase{
 				repo: mockRepo,
 			}
-			if err := u.RegisterUser(tt.args.user); (err != nil) != tt.wantErr {
+			if _, err := u.RegisterUser(tt.args.user); (err != nil) != tt.wantErr {
 				t.Errorf("UserUseCase.RegisterUser() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -238,7 +238,10 @@ func TestGenerateJWT(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GenerateJWT(tt.args.username, tt.args.secret)
+			payload := map[string]interface{}{
+				"username": tt.args.username,
+			}
+			got, err := GenerateJWT(payload, tt.args.secret)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GenerateJWT() error = %v, wantErr %v", err, tt.wantErr)
 				return
