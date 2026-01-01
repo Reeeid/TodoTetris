@@ -1,8 +1,6 @@
 package dto
 
-import "github.com/Reeeid/TodoTetris/Domain/model"
-
-//Todo作成と返答
+import "github.com/Reeeid/TodoTetris/api/Domain/model"
 
 type CreateTodoRequest struct {
 	Subject     string `json:"subject"`
@@ -40,7 +38,7 @@ func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
 	}
 }
 
-//アップデートTODOは差分適応用にTODORESPONSEを返す
+//アチE�EチE�EチEODOは差刁E��応用にTODORESPONSEを返す
 func ToTodoResponse(m *model.Todo) TodoResponse {
 	return TodoResponse{
 		ID:          m.ID,
@@ -49,7 +47,7 @@ func ToTodoResponse(m *model.Todo) TodoResponse {
 	}
 }
 
-//Get Todoのレスポンス　ユーザー名はミドルウェアからとって全部渡す
+//Get Todoのレスポンス　ユーザー名をミドルウェアからとる
 
 type ReadTodoResponse struct {
 	Todos []TodoResponse `json:"todos"`

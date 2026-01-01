@@ -1,8 +1,10 @@
 package init
 
 import (
-	infrastructure "github.com/Reeeid/TodoTetris/Infrastructure"
-	usecase "github.com/Reeeid/TodoTetris/UseCase"
+	"fmt"
+
+	infrastructure "github.com/Reeeid/TodoTetris/api/Infrastructure"
+	usecase "github.com/Reeeid/TodoTetris/api/UseCase"
 )
 
 var (
@@ -13,6 +15,7 @@ var (
 )
 
 func init() {
+	fmt.Println("DEBUG: api/init/init.go initializing...")
 	driver := infrastructure.NewSupabaseDB()
 	db := driver.GetDB()
 	TodoRepo := infrastructure.NewTodoRepo(db)

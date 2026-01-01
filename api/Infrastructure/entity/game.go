@@ -4,8 +4,8 @@ import (
 	"time"
 	_ "time"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
-	_ "github.com/Reeeid/TodoTetris/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
+	_ "github.com/Reeeid/TodoTetris/api/Domain/model"
 )
 
 type GameSession struct {

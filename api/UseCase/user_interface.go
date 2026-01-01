@@ -2,7 +2,7 @@ package usecase
 
 //go:generate mockgen -source=$GOFILE -package=mock -destination=../mock/user_repo_mock.go
 
-import "github.com/Reeeid/TodoTetris/Domain/model"
+import "github.com/Reeeid/TodoTetris/api/Domain/model"
 
 type UserRepository interface {
 	CreateUser(m *model.User) error

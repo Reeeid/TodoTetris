@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
 )
 
 type UUIDUseCase struct {

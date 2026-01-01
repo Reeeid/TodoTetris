@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
 )
 
 // gorm models

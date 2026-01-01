@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
-	"github.com/Reeeid/TodoTetris/Interface/dto"
-	mdw "github.com/Reeeid/TodoTetris/Middleware"
-	di "github.com/Reeeid/TodoTetris/init"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Interface/dto"
+	mdw "github.com/Reeeid/TodoTetris/api/Middleware"
+	di "github.com/Reeeid/TodoTetris/api/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -32,13 +32,13 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 		model := &model.Session{
 			UserID: username,
 		}
-		//ステータスチェックでセッションを返すか判断する
+		//スチE�EタスチェチE��でセチE��ョンを返すか判断する
 		status, err := di.GameUsecase.GameStatus(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		//trueは今日プレイしていることを意味する
+		//trueは今日プレイしてぁE��ことを意味する
 		if status == false {
 			res := dto.ToTetrisResponse(status, nil)
 			w.Header().Set("Content-Type", "application/json")
@@ -48,7 +48,7 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
-		//もしプレイしてないならデータを返しておく
+		//もしプレイしてなぁE��らデータを返しておく
 		session, err := di.GameUsecase.LoadGame(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

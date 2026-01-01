@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -71,7 +71,7 @@ func GenerateJWT(payload map[string]interface{}, secret string) (string, error) 
 	payloadJSON, _ := json.Marshal(payload)
 	payloadEncoded := base64.RawURLEncoding.EncodeToString(payloadJSON)
 	unsignedToken := headerEncoded + "." + payloadEncoded
-	//署名 (HMAC-SHA256)
+	//署吁E(HMAC-SHA256)
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(unsignedToken))
 	signature := h.Sum(nil)

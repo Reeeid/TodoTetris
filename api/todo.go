@@ -1,13 +1,13 @@
-package todo
+package handler
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/Domain/model"
-	"github.com/Reeeid/TodoTetris/Interface/dto"
-	mdw "github.com/Reeeid/TodoTetris/Middleware"
-	di "github.com/Reeeid/TodoTetris/init"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Interface/dto"
+	mdw "github.com/Reeeid/TodoTetris/api/Middleware"
+	di "github.com/Reeeid/TodoTetris/api/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +16,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodoHandler(w http.ResponseWriter, r *http.Request) {
-	//context伝搬でユーザー名をあらかじめ代入しておく（アクセス制御のため）
+	//context伝搬でユーザー名をあらかじめ代入しておく
+	// アクセス制御のため
 	val := r.Context().Value(mdw.UserKey)
 	if val == nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)

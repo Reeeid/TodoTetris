@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/Reeeid/TodoTetris/Domain/model"
+import "github.com/Reeeid/TodoTetris/api/Domain/model"
 
 type TetrisResponse struct {
 	IsPlayed bool                     `json:"is_played"`

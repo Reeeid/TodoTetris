@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/Reeeid/TodoTetris/Domain/model"
+import "github.com/Reeeid/TodoTetris/api/Domain/model"
 
 type TodoUseCase struct {
 	repo TodoRepository

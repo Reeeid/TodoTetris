@@ -1,8 +1,8 @@
 package infrastructure
 
 import (
-	"github.com/Reeeid/TodoTetris/Domain/model"
-	"github.com/Reeeid/TodoTetris/Infrastructure/entity"
+	"github.com/Reeeid/TodoTetris/api/Domain/model"
+	"github.com/Reeeid/TodoTetris/api/Infrastructure/entity"
 	"gorm.io/gorm"
 )
 
@@ -45,7 +45,7 @@ func (t *TodoRepoImpl) UpdateTodo(todo *model.Todo) (*model.Todo, error) {
 	}).Error; err != nil {
 		return nil, err
 	}
-	//todo返すでもいいかもしれない
+	//todo返すでもいぁE��もしれなぁE
 	if err := t.db.First(&e, id).Error; err != nil {
 		return nil, err
 	}

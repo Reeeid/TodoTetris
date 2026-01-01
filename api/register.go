@@ -1,23 +1,23 @@
-package login
+package handler
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/Interface/dto"
-	di "github.com/Reeeid/TodoTetris/init"
+	"github.com/Reeeid/TodoTetris/api/Interface/dto"
+	di "github.com/Reeeid/TodoTetris/api/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodPost:
-		var req *dto.LoginUserRequest
+		var req *dto.RegisterUserRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		model := req.ToDomain()
-		token, err := di.UserUsecase.LoginUser(model)
+		token, err := di.UserUsecase.RegisterUser(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

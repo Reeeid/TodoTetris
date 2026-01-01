@@ -1,11 +1,11 @@
-package uuid
+package handler
 
 import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/Interface/dto"
-	di "github.com/Reeeid/TodoTetris/init"
+	"github.com/Reeeid/TodoTetris/api/Interface/dto"
+	di "github.com/Reeeid/TodoTetris/api/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
