@@ -16,6 +16,13 @@ func NewSupabaseDB() *SupabaseDBProvider {
 type SupabaseDBProvider struct{}
 
 func (p *SupabaseDBProvider) GetDB() *gorm.DB {
+	// DEBUG: Print all env keys
+	fmt.Println("DEBUG: Dumping Environment Keys:")
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		fmt.Println("KEY:", pair[0])
+	}
+
 	dsn := os.Getenv("DB_PATH")
 	dsn = strings.TrimSpace(dsn)
 	fmt.Printf("DEBUG: DB_PATH Length: %d\n", len(dsn))
