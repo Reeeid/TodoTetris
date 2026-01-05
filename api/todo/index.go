@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/api/Domain/model"
-	"github.com/Reeeid/TodoTetris/api/Interface/dto"
-	mdw "github.com/Reeeid/TodoTetris/api/Middleware"
-	di "github.com/Reeeid/TodoTetris/api/init"
+	"github.com/Reeeid/TodoTetris/pkg/Domain/model"
+	"github.com/Reeeid/TodoTetris/pkg/Interface/dto"
+	mdw "github.com/Reeeid/TodoTetris/pkg/Middleware"
+	di "github.com/Reeeid/TodoTetris/pkg/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {

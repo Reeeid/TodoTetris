@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Reeeid/TodoTetris/api/Domain/model"
-	"github.com/Reeeid/TodoTetris/api/mock" // Adjust this if the package name in go.mod is different, verified as github.com/Reeeid/TodoTetris
+	"github.com/Reeeid/TodoTetris/pkg/Domain/model"
+	"github.com/Reeeid/TodoTetris/pkg/mock" // Adjust this if the package name in go.mod is different, verified as github.com/Reeeid/TodoTetris
 	gomock "go.uber.org/mock/gomock"
 	"golang.org/x/crypto/bcrypt"
 )

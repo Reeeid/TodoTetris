@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/api/Interface/dto"
-	di "github.com/Reeeid/TodoTetris/api/init"
+	"github.com/Reeeid/TodoTetris/pkg/Interface/dto"
+	di "github.com/Reeeid/TodoTetris/pkg/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {

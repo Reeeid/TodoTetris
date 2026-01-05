@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Reeeid/TodoTetris/api/Domain/model"
-	"github.com/Reeeid/TodoTetris/api/Interface/dto"
-	mdw "github.com/Reeeid/TodoTetris/api/Middleware"
-	di "github.com/Reeeid/TodoTetris/api/init"
+	"github.com/Reeeid/TodoTetris/pkg/Domain/model"
+	"github.com/Reeeid/TodoTetris/pkg/Interface/dto"
+	mdw "github.com/Reeeid/TodoTetris/pkg/Middleware"
+	di "github.com/Reeeid/TodoTetris/pkg/init"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -39,9 +39,9 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// プレイ済みかどうかにかかわらず、前回のセッション情報を取得する（ペナルティ計算用）
+		// プレイ済みかどぁE��にかかわらず、前回�EセチE��ョン惁E��を取得する（�EナルチE��計算用�E�E
 		session, err := di.GameUsecase.LoadGame(model)
-		// エラーは無視（初回ユーザーなど）
+		// エラーは無視（�E回ユーザーなど�E�E
 
 		res := dto.ToTetrisResponse(status, session)
 		w.Header().Set("Content-Type", "application/json")

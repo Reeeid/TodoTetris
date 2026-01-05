@@ -41,7 +41,7 @@ func AuthJWT(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// ペイロードでここにusernameと有効期限が入ってる
+		// ペイロードでここにusernameと有効期限が�EってめE
 		payloadSegment := parts[1]
 
 		payloadBytes, err := base64.RawURLEncoding.DecodeString(payloadSegment)

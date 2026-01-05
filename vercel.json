@@ -1,1 +1,9 @@
-{}
+{
+  "rewrites": [
+    { "source": "/api/todo", "destination": "/api/todo/index.go" },
+    { "source": "/api/tetris", "destination": "/api/tetris/index.go" },
+    { "source": "/api/login", "destination": "/api/login/index.go" },
+    { "source": "/api/register", "destination": "/api/register/index.go" },
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ]
+}

@@ -3,7 +3,7 @@ package usecase
 import (
 	"time"
 
-	"github.com/Reeeid/TodoTetris/api/Domain/model"
+	"github.com/Reeeid/TodoTetris/pkg/Domain/model"
 )
 
 type GameUseCase struct {

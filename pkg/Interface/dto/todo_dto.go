@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/Reeeid/TodoTetris/api/Domain/model"
+import "github.com/Reeeid/TodoTetris/pkg/Domain/model"
 
 type CreateTodoRequest struct {
 	Subject     string `json:"subject"`
@@ -53,7 +53,7 @@ func ToTodoResponse(m *model.Todo) TodoResponse {
 	}
 }
 
-//Get Todoのレスポンス　ユーザー名をミドルウェアからとる
+//Get Todoのレスポンス　ユーザー名をミドルウェアからとめE
 
 type ReadTodoResponse struct {
 	Todos []TodoResponse `json:"todos"`

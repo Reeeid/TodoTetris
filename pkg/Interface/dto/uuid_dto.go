@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/Reeeid/TodoTetris/api/Domain/model"
+import "github.com/Reeeid/TodoTetris/pkg/Domain/model"
 
 type UUIDResponse struct {
 	UUID string `json:"uuid"`

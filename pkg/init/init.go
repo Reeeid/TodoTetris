@@ -3,8 +3,8 @@ package init
 import (
 	"fmt"
 
-	infrastructure "github.com/Reeeid/TodoTetris/api/Infrastructure"
-	usecase "github.com/Reeeid/TodoTetris/api/UseCase"
+	infrastructure "github.com/Reeeid/TodoTetris/pkg/Infrastructure"
+	usecase "github.com/Reeeid/TodoTetris/pkg/UseCase"
 )
 
 var (

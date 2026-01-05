@@ -3,8 +3,8 @@ package infrastructure
 import (
 	"errors"
 
-	"github.com/Reeeid/TodoTetris/api/Domain/model"
-	"github.com/Reeeid/TodoTetris/api/Infrastructure/entity"
+	"github.com/Reeeid/TodoTetris/pkg/Domain/model"
+	"github.com/Reeeid/TodoTetris/pkg/Infrastructure/entity"
 	"gorm.io/gorm"
 )
 
