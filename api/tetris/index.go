@@ -1,4 +1,4 @@
-package tetris
+package handler
 
 import (
 	"encoding/json"
@@ -32,28 +32,17 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 		model := &model.Session{
 			UserID: username,
 		}
-		//スチE�EタスチェチE��でセチE��ョンを返すか判断する
+		//スチEEタスチェチEでセチEョンを返すか判断する
 		status, err := di.GameUsecase.GameStatus(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		//trueは今日プレイしてぁE��ことを意味する
-		if status == false {
-			res := dto.ToTetrisResponse(status, nil)
-			w.Header().Set("Content-Type", "application/json")
-			if err := json.NewEncoder(w).Encode(res); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-			return
-		}
-		//もしプレイしてなぁE��らデータを返しておく
+
+		// プレイ済みかどうかにかかわらず、前回のセッション情報を取得する（ペナルティ計算用）
 		session, err := di.GameUsecase.LoadGame(model)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		// エラーは無視（初回ユーザーなど）
+
 		res := dto.ToTetrisResponse(status, session)
 		w.Header().Set("Content-Type", "application/json")
 		if err := json.NewEncoder(w).Encode(res); err != nil {

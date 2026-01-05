@@ -46,6 +46,9 @@ func (g *GameRepoImpl) LoadGame(userID string) (*model.Session, error) {
 	var e entity.GameSession
 	err := g.db.Where("user_id = ?", userID).First(&e).Error
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return e.ToDomain(), nil

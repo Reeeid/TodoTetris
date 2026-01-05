@@ -13,8 +13,9 @@ type GameSessionSaveRequest struct {
 }
 
 type GameSessionLoadResponse struct {
-	BoardState string `json:"board_state"`
-	Score      int    `json:"Score"`
+	BoardState   string `json:"board_state"`
+	Score        int    `json:"Score"`
+	LastPlayedAt string `json:"last_played_at"`
 }
 
 func (g *GameSessionSaveRequest) ToDomain(username string) *model.Session {
@@ -28,8 +29,9 @@ func ToTetrisResponse(IsPlayed bool, m *model.Session) *TetrisResponse {
 	var session *GameSessionLoadResponse
 	if m != nil {
 		session = &GameSessionLoadResponse{
-			BoardState: m.BoardState,
-			Score:      m.Score,
+			BoardState:   m.BoardState,
+			Score:        m.Score,
+			LastPlayedAt: m.LastPlayedAt.Format("2006-01-02T15:04:05Z07:00"),
 		}
 	}
 	return &TetrisResponse{

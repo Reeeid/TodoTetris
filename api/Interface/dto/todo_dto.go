@@ -8,6 +8,10 @@ type CreateTodoRequest struct {
 	UUID        string `json:"uuid"`
 }
 
+type CreateTodoBatchRequest struct {
+	Todos []CreateTodoRequest `json:"todos"`
+}
+
 func (req *CreateTodoRequest) ToDomain(username string, UUID string) *model.Todo {
 	return &model.Todo{
 		Subject:     req.Subject,
@@ -21,6 +25,7 @@ type TodoResponse struct {
 	ID          int64  `json:"id"`
 	Subject     string `json:"subject"`
 	Description string `json:"description"`
+	UUID        string `json:"uuid"`
 }
 
 type UpdateTodoRequest struct {
@@ -38,12 +43,13 @@ func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
 	}
 }
 
-//アチE�EチE�EチEODOは差刁E��応用にTODORESPONSEを返す
+//アチEEチEEチEODOは差刁E応用にTODORESPONSEを返す
 func ToTodoResponse(m *model.Todo) TodoResponse {
 	return TodoResponse{
 		ID:          m.ID,
 		Subject:     m.Subject,
 		Description: m.Description,
+		UUID:        m.UUID,
 	}
 }
 
@@ -60,6 +66,7 @@ func ToReadTodoResponse(models []model.Todo) ReadTodoResponse {
 			ID:          m.ID,
 			Subject:     m.Subject,
 			Description: m.Description,
+			UUID:        m.UUID,
 		}
 	}
 	return ReadTodoResponse{Todos: todos}

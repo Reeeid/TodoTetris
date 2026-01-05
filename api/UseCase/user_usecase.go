@@ -43,9 +43,12 @@ func (u *UserUseCase) RegisterUser(user *model.User) (string, error) {
 }
 
 func (u *UserUseCase) LoginUser(user *model.User) (string, error) {
-	_, result, err := u.repo.FindByUserID(user.Username)
+	found, result, err := u.repo.FindByUserID(user.Username)
 	if err != nil {
 		return "", err
+	}
+	if !found {
+		return "", fmt.Errorf("User not found")
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(result.PasswordHash), []byte(user.PasswordHash)); err != nil {
 		return "", fmt.Errorf("Not Authenticated")

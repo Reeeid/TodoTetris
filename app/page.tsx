@@ -1,51 +1,98 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import TodoEntry, { PendingTodo } from "./components/TodoEntry";
+import TetrisApp from "./components/TetrisApp";
+import TodoApp from "./components/TodoApp";
 
-export default function Home() {
-  const [uuid, setUuid] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+type ViewMode = "loading" | "entry" | "game" | "list";
+
+export default function Dashboard() {
+  const [mode, setMode] = useState<ViewMode>("loading");
+  const [sessionTodos, setSessionTodos] = useState<PendingTodo[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/uuid",{method: "GET"})
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("API Data:", data);
-        setUuid(data.uuid);
-      })
-      .catch((err) => {
-        console.error("Fetch error:", err);
-        setError(err.message);
-      });
+    checkStatus();
   }, []);
 
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-      <main className="flex w-full max-w-lg flex-col items-center gap-8 rounded-xl bg-white p-8 shadow-lg">
-        <h1 className="text-2xl font-bold">API Test</h1>
-        
-        <div className="text-center">
-          <p className="mb-2 text-gray-600">Requesting: <code className="bg-gray-200 px-1 rounded">/api/UUID</code></p>
-          
-          {error ? (
-            <div className="rounded-md bg-red-50 p-4 text-red-600">
-              <p className="font-bold">Error:</p>
-              <p>{error}</p>
-            </div>
-          ) : uuid ? (
-            <div className="rounded-md bg-green-50 p-4 text-green-700">
-              <p className="font-bold">Success! Received UUID:</p>
-              <p className="break-all font-mono text-xl">{uuid}</p>
-            </div>
-          ) : (
-            <p className="animate-pulse text-gray-500">Loading...</p>
-          )}
+  const checkStatus = async () => {
+    try {
+      const res = await fetch("/api/tetris");
+      
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        // Fallback or error
+        console.error("Status check failed");
+        return;
+      }
+
+      const data = await res.json();
+      
+      // Check if played today
+      if (data.is_played) {
+          setMode("list");
+      } else {
+          // If not played, go to entry (even if new user)
+          setMode("entry");
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleStartGame = (todos: PendingTodo[]) => {
+    setSessionTodos(todos);
+    setMode("game");
+  };
+
+  const handleGameOver = () => {
+    // After game, ALWAYS go to list
+    setMode("list");
+  };
+
+  if (mode === "loading") {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-zinc-900 flex-col gap-4">
+        <div className="text-xl font-semibold text-gray-500 animate-pulse">
+          Connecting to System...
         </div>
+        {/* If it takes too long, we might want to show a retry manually? 
+            For now, let's just make the text friendlier. 
+            User complaint: "Shows up occasionally". 
+            If it's just slow, this text is fine. 
+        */}
+      </div>
+    );
+  }
+
+  // Add Error Mode Handling if needed, but for now let's make checkStatus robust.
+
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-zinc-900 text-gray-800 dark:text-gray-100 font-sans">
+      <nav className="p-4 bg-white dark:bg-zinc-800 shadow-sm flex justify-between items-center">
+        <h1 className="text-xl font-bold tracking-tight">TodoTetris</h1>
+        <button
+          onClick={() => {
+            document.cookie = "token=; Max-Age=0; path=/;";
+            router.push("/login");
+          }}
+          className="text-sm font-medium text-red-500 hover:text-red-600"
+        >
+          Logout
+        </button>
+      </nav>
+
+      <main className="container mx-auto py-10 px-4">
+        {mode === "entry" && <TodoEntry onStartGame={handleStartGame} />}
+        {mode === "game" && <TetrisApp onGameOver={handleGameOver} pendingTodos={sessionTodos} />}
+        {mode === "list" && <TodoApp />}
       </main>
     </div>
   );
