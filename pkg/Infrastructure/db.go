@@ -1,7 +1,9 @@
 package infrastructure
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -15,6 +17,15 @@ type SupabaseDBProvider struct{}
 
 func (p *SupabaseDBProvider) GetDB() *gorm.DB {
 	dsn := os.Getenv("DB_PATH")
+	dsn = strings.TrimSpace(dsn)
+	fmt.Printf("DEBUG: DB_PATH Length: %d\n", len(dsn))
+	if len(dsn) > 15 {
+		fmt.Printf("DEBUG: DB_PATH Prefix: %s...\n", dsn[:15])
+	}
+
+	if dsn == "" {
+		panic("CRITICAL ERROR: DB_PATH environment variable is not set (or empty). Please add it in Vercel Settings.")
+	}
 
 	// Disable prepared statements for Supabase Transaction Pooler compatibility
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
