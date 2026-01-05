@@ -29,7 +29,7 @@ func AuthJWT(next http.HandlerFunc) http.HandlerFunc {
 			http.Error(w, "Unauthorized: Invalid token format", http.StatusUnauthorized)
 			return
 		}
-		// 署名検証
+		// 鄂ｲ蜷肴､懆ｨｼ
 		unsignedToken := parts[0] + "." + parts[1]
 
 		h := hmac.New(sha256.New, []byte(os.Getenv(("SECRET_KEY"))))
@@ -41,7 +41,7 @@ func AuthJWT(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// ペイロードでここにusernameと有効期限が�EってめE
+		// 繝壹う繝ｭ繝ｼ繝峨〒縺薙％縺ｫusername縺ｨ譛牙柑譛滄剞縺悟・縺｣縺ｦ繧・
 		payloadSegment := parts[1]
 
 		payloadBytes, err := base64.RawURLEncoding.DecodeString(payloadSegment)

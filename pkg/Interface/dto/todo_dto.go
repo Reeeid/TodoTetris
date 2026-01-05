@@ -43,7 +43,7 @@ func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
 	}
 }
 
-//アチEEチEEチEODOは差刁E応用にTODORESPONSEを返す
+//繧｢繝・E繝・E繝・ODO縺ｯ蟾ｮ蛻・蠢懃畑縺ｫTODORESPONSE繧定ｿ斐☆
 func ToTodoResponse(m *model.Todo) TodoResponse {
 	return TodoResponse{
 		ID:          m.ID,
@@ -53,7 +53,7 @@ func ToTodoResponse(m *model.Todo) TodoResponse {
 	}
 }
 
-//Get Todoのレスポンス　ユーザー名をミドルウェアからとめE
+//Get Todo縺ｮ繝ｬ繧ｹ繝昴Φ繧ｹ縲繝ｦ繝ｼ繧ｶ繝ｼ蜷阪ｒ繝溘ラ繝ｫ繧ｦ繧ｧ繧｢縺九ｉ縺ｨ繧・
 
 type ReadTodoResponse struct {
 	Todos []TodoResponse `json:"todos"`

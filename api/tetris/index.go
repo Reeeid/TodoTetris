@@ -32,16 +32,16 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 		model := &model.Session{
 			UserID: username,
 		}
-		//スチEEタスチェチEでセチEョンを返すか判断する
+		//繧ｹ繝・E繧ｿ繧ｹ繝√ぉ繝・縺ｧ繧ｻ繝・繝ｧ繝ｳ繧定ｿ斐☆縺句愛譁ｭ縺吶ｋ
 		status, err := di.GameUsecase.GameStatus(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		// プレイ済みかどぁE��にかかわらず、前回�EセチE��ョン惁E��を取得する（�EナルチE��計算用�E�E
+		// 繝励Ξ繧､貂医∩縺九←縺・°縺ｫ縺九°繧上ｉ縺壹∝燕蝗槭・繧ｻ繝・す繝ｧ繝ｳ諠・ｱ繧貞叙蠕励☆繧具ｼ医・繝翫Ν繝・ぅ險育ｮ礼畑・・
 		session, err := di.GameUsecase.LoadGame(model)
-		// エラーは無視（�E回ユーザーなど�E�E
+		// 繧ｨ繝ｩ繝ｼ縺ｯ辟｡隕厄ｼ亥・蝗槭Θ繝ｼ繧ｶ繝ｼ縺ｪ縺ｩ・・
 
 		res := dto.ToTetrisResponse(status, session)
 		w.Header().Set("Content-Type", "application/json")

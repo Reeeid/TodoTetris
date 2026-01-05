@@ -64,7 +64,7 @@ func (u *UserUseCase) LoginUser(user *model.User) (string, error) {
 }
 
 func GenerateJWT(payload map[string]interface{}, secret string) (string, error) {
-	//ヘッダー
+	//繝倥ャ繝繝ｼ
 	header := map[string]interface{}{
 		"alg": "HS256",
 		"typ": "JWT",
@@ -74,7 +74,7 @@ func GenerateJWT(payload map[string]interface{}, secret string) (string, error) 
 	payloadJSON, _ := json.Marshal(payload)
 	payloadEncoded := base64.RawURLEncoding.EncodeToString(payloadJSON)
 	unsignedToken := headerEncoded + "." + payloadEncoded
-	//署吁E(HMAC-SHA256)
+	//鄂ｲ蜷・(HMAC-SHA256)
 	h := hmac.New(sha256.New, []byte(secret))
 	h.Write([]byte(unsignedToken))
 	signature := h.Sum(nil)

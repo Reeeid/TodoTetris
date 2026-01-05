@@ -16,8 +16,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodoHandler(w http.ResponseWriter, r *http.Request) {
-	//context伝搬でユーザー名をあらかじめ代入しておく
-	// アクセス制御のため
+	//context莨晄成縺ｧ繝ｦ繝ｼ繧ｶ繝ｼ蜷阪ｒ縺ゅｉ縺九§繧∽ｻ｣蜈･縺励※縺翫￥
+	// 繧｢繧ｯ繧ｻ繧ｹ蛻ｶ蠕｡縺ｮ縺溘ａ
 	val := r.Context().Value(mdw.UserKey)
 	if val == nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)

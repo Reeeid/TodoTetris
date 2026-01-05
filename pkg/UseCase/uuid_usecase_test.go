@@ -12,19 +12,19 @@ import (
 func TestGetTodaysUUID(t *testing.T) {
 	uc := NewUUIDUseCase()
 
-	// 1. 生�EチE��チE
+	// 1. 逕滓・繝・せ繝・
 	result := uc.GetTodaysUUID()
 	assert.NotNil(t, result, "Result should not be nil")
 	assert.NotEmpty(t, result.UUID, "UUID should not be empty")
 
-	// 2. フォーマット確誁E(長ぁE6斁E��E 8-4-4-4-12)
+	// 2. 繝輔か繝ｼ繝槭ャ繝育｢ｺ隱・(髟ｷ縺・6譁・ｭ・ 8-4-4-4-12)
 	assert.Len(t, result.UUID, 36, "Expected UUID length 36")
 
-	// 3. 決定論的であるか�E確誁E
+	// 3. 豎ｺ螳夊ｫ也噪縺ｧ縺ゅｋ縺九・遒ｺ隱・
 	result2 := uc.GetTodaysUUID()
 	assert.Equal(t, result.UUID, result2.UUID, "UUID should be deterministic")
 
-	// 4. (参老E 手動計算と一致するぁE
+	// 4. (蜿り・ 謇句虚險育ｮ励→荳閾ｴ縺吶ｋ縺・
 	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
 	now := time.Now().In(jst)
 	dateStr := now.Format("2006-01-02")
