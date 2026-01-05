@@ -16,14 +16,20 @@ func NewSupabaseDB() *SupabaseDBProvider {
 type SupabaseDBProvider struct{}
 
 func (p *SupabaseDBProvider) GetDB() *gorm.DB {
-	// DEBUG: Print all env keys
-	fmt.Println("DEBUG: Dumping Environment Keys:")
-	for _, e := range os.Environ() {
-		pair := strings.SplitN(e, "=", 2)
-		fmt.Println("KEY:", pair[0])
+	dsn := os.Getenv("DB_PATH")
+	if dsn == "" {
+		dsn = os.Getenv("POSTGRES_URL")
+	}
+	if dsn == "" {
+		dsn = os.Getenv("DATABASE_URL")
 	}
 
-	dsn := os.Getenv("DB_PATH")
+	// FALLBACK: Hardcoded for debugging (Temporarily using the one provided in chat)
+	if dsn == "" {
+		fmt.Println("DEBUG: Environment variables failed. Using Hardcoded Fallback.")
+		dsn = "postgresql://postgres.yrijysdajdndbunuvoss:fU7y7PWqkjR8YFxC@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres" // TODO: REMOVE THIS
+	}
+
 	dsn = strings.TrimSpace(dsn)
 	fmt.Printf("DEBUG: DB_PATH Length: %d\n", len(dsn))
 	if len(dsn) > 15 {
