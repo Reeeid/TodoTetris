@@ -17,7 +17,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		model := req.ToDomain()
-		token, err := di.UserUsecase.LoginUser(model)
+		token, err := di.GetUserUsecase().LoginUser(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

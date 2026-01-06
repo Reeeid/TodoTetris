@@ -33,14 +33,14 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 			UserID: username,
 		}
 		//繧ｹ繝・E繧ｿ繧ｹ繝√ぉ繝・縺ｧ繧ｻ繝・繝ｧ繝ｳ繧定ｿ斐☆縺句愛譁ｭ縺吶ｋ
-		status, err := di.GameUsecase.GameStatus(model)
+		status, err := di.GetGameUsecase().GameStatus(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
 		// 繝励Ξ繧､貂医∩縺九←縺・°縺ｫ縺九°繧上ｉ縺壹∝燕蝗槭・繧ｻ繝・す繝ｧ繝ｳ諠・ｱ繧貞叙蠕励☆繧具ｼ医・繝翫Ν繝・ぅ險育ｮ礼畑・・
-		session, err := di.GameUsecase.LoadGame(model)
+		session, err := di.GetGameUsecase().LoadGame(model)
 		// 繧ｨ繝ｩ繝ｼ縺ｯ辟｡隕厄ｼ亥・蝗槭Θ繝ｼ繧ｶ繝ｼ縺ｪ縺ｩ・・
 
 		res := dto.ToTetrisResponse(status, session)
@@ -58,7 +58,7 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		model := req.ToDomain(username)
-		if err := di.GameUsecase.SaveSession(model); err != nil {
+		if err := di.GetGameUsecase().SaveSession(model); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

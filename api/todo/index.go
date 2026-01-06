@@ -53,9 +53,9 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Process loop
 		for _, reqItem := range batchReq.Todos {
-			uuidObj := di.UUIDUsecase.GetTodaysUUID()
+			uuidObj := di.GetUUIDUsecase().GetTodaysUUID()
 			model := reqItem.ToDomain(username, uuidObj.UUID)
-			err := di.TodoUsecase.CreateTodo(model)
+			err := di.GetTodoUsecase().CreateTodo(model)
 			if err != nil {
 				// On error, we stop? Or continue?
 				http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -74,7 +74,7 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 		model := &model.Todo{
 			UserID: username,
 		}
-		todos, err := di.TodoUsecase.ReadTodos(model)
+		todos, err := di.GetTodoUsecase().ReadTodos(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -95,7 +95,7 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		model := req.ToDomain(username)
-		todo, err := di.TodoUsecase.UpdateTodo(model)
+		todo, err := di.GetTodoUsecase().UpdateTodo(model)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -117,7 +117,7 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 
 		models := req.ToDomain(username)
 		for _, model := range models {
-			err := di.TodoUsecase.DeleteTodo(&model)
+			err := di.GetTodoUsecase().DeleteTodo(&model)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
