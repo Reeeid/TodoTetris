@@ -63,11 +63,6 @@ export default function Dashboard() {
         <div className="text-xl font-semibold text-gray-500 animate-pulse">
           Connecting to System...
         </div>
-        {/* If it takes too long, we might want to show a retry manually? 
-            For now, let's just make the text friendlier. 
-            User complaint: "Shows up occasionally". 
-            If it's just slow, this text is fine. 
-        */}
       </div>
     );
   }

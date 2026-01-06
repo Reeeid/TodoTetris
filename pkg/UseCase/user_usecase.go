@@ -20,10 +20,6 @@ func NewUserUseCase(repo UserRepository) *UserUseCase {
 	secret := os.Getenv("SECRET_KEY")
 	if secret == "" {
 		fmt.Println("WARNING: SECRET_KEY is not set! Using hardcoded fallback for debugging.")
-		// We don't set env var here, but we should handle it in methods or set a global?
-		// Better set the env var itself so other parts pick it up?
-		// Or just ignore panic and handle downstream? UseCase methods call os.Getenv individually.
-		// Let's set it in os.Setenv so GetEnv calls work? Yes.
 		os.Setenv("SECRET_KEY", "temporary_debug_secret_key_12345")
 	}
 	return &UserUseCase{repo: repo}

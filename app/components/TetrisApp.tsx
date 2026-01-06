@@ -9,7 +9,6 @@ interface Todo {
   uuid: string;
 }
 
-// Brought from TodoEntry
 interface PendingTodo {
   id: string; 
   subject: string;
@@ -25,7 +24,6 @@ interface TetrisAppProps {
 const COLS = 10;
 const ROWS = 20;
 
-// Colors for pieces
 const COLORS = [
   "bg-cyan-500",    // I
   "bg-blue-500",    // J
@@ -87,7 +85,6 @@ interface Cell {
   uuid: string | null; // Todo UUID attached to this block
 }
 
-// --- Helper: Custom Hook for Game Loop ---
 function useInterval(callback: () => void, delay: number | null) {
   const savedCallback = useRef(callback);
   useEffect(() => { savedCallback.current = callback; }, [callback]);
@@ -100,7 +97,6 @@ function useInterval(callback: () => void, delay: number | null) {
 }
 
 export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) {
-  // --- State ---
   const [grid, setGrid] = useState<Cell[][]>([]);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [activePiece, setActivePiece] = useState<{ x: number, y: number, shape: number[][], color: string, uuids: (string | null)[] } | null>(null);
@@ -108,8 +104,6 @@ export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) 
   const [gameOver, setGameOver] = useState(false);
   const [dropSpeed, setDropSpeed] = useState<number | null>(1000);
   const [loadingMsg, setLoadingMsg] = useState<string | null>("読み込み中...");
-
-  // Logic Hoisting
   const deserializeGrid = (jsonStr: string): Cell[][] => {
       const g = Array.from({ length: ROWS }, () => 
         Array.from({ length: COLS }, () => ({ filled: false, color: "", uuid: null }))
@@ -163,8 +157,6 @@ export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) 
       return false;
   };
 
-  // --- Initialization ---
-  // --- Initialization ---
   const initializedRef = useRef(false);
 
   useEffect(() => {
@@ -229,7 +221,6 @@ export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) 
     init();
   }, []);
 
-  // --- Main Logic (Lock & Commit) ---
   const saveSession = async (currentGrid: Cell[][], currentScore: number) => {
       try {
           await fetch("/api/tetris", {
@@ -246,19 +237,6 @@ export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) 
   const handleGameOver = async () => {
       setGameOver(true);
       setDropSpeed(null);
-      // Game Over -> Delete ALL Todos (Including pending if created? No, only API known ones)
-      // Since we create on lock, if game over happens BEFORE first lock, no backend change needed.
-      // But if we fail middle of game?
-      // Wait, "One Piece per Day" flow implies game ends after 1 piece.
-      // So Game Over usually means "Failed to place piece" (Top out).
-      // In that case, we should probably delete everything if requested "Game Over = Delete All".
-      
-      // If we haven't locked ANY piece yet, pending todos are just in memory. We just lose them.
-      // If we are strictly 1 piece, then top out is unlikely unless penalty kills us.
-      
-      // Request: "Game Over -> Delete All"
-      // If we have existing todos (from previous sessions? No, 1 piece flow).
-      // Let's implement Delete All just in case.
       try {
          // Maybe fetch existing todos first to get UUIDs?
          const r = await fetch("/api/todo");

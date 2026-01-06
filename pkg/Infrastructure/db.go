@@ -29,11 +29,9 @@ func (p *SupabaseDBProvider) GetDB() *gorm.DB {
 		panic("failed to get sqlDB: " + err.Error())
 	}
 
-	// Limit connections to avoid "MaxClientsInSessionMode" error on Supabase
-	// especially for Vercel functions which scale out.
 	sqlDB.SetMaxOpenConns(1)
 	sqlDB.SetMaxIdleConns(1)
-	sqlDB.SetConnMaxLifetime(60 * 60) // 1 Hour (or shorter if needed)
+	sqlDB.SetConnMaxLifetime(60 * 60)
 
 	return db
 }

@@ -45,11 +45,9 @@ func (t *TodoRepoImpl) UpdateTodo(todo *model.Todo) (*model.Todo, error) {
 	}).Error; err != nil {
 		return nil, err
 	}
-	//todo霑斐☆縺ｧ繧ゅ＞縺・・ｽ・ｽ繧ゅ＠繧後↑縺・
 	if err := t.db.First(&e, id).Error; err != nil {
 		return nil, err
 	}
-	//
 	return e.ToDomain(), nil
 }
 
@@ -61,10 +59,3 @@ func (t *TodoRepoImpl) DeleteTodo(todo *model.Todo) error {
 	}
 	return nil
 }
-
-/*
-	CreateTodo(todo *model.Todo) error
-	ReadTodo(todo *model.Todo) ([]model.Todo, error)
-	UpdateTodo(todo *model.Todo) (*model.Todo, error)
-	DeleteTodo(todo *model.Todo) (*model.Todo, error)
-*/

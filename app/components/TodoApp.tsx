@@ -60,7 +60,6 @@ export default function TodoApp() {
 
       if (!res.ok) throw new Error("Update failed");
 
-      // Optimistic update
       setTodos(todos.map(t => t.id === todo.id ? { ...t, subject: editSubject, description: editDescription } : t));
       setEditingId(null);
     } catch (e) {

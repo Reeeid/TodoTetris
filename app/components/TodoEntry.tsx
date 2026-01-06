@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 
-// Shared Type
 export interface PendingTodo {
-  id: string; // Temporary ID
+  id: string;
   subject: string;
   description: string;
 }
@@ -13,7 +12,6 @@ interface TodoEntryProps {
   onStartGame: (tasks: PendingTodo[]) => void;
 }
 
-// Icons
 const PlusIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
 );
@@ -48,7 +46,6 @@ export default function TodoEntry({ onStartGame }: TodoEntryProps) {
 
   const handleStart = () => {
       if(pending.length === 0) return;
-      // Pass data to parent to start game flow
       onStartGame(pending);
   };
 
@@ -65,7 +62,6 @@ export default function TodoEntry({ onStartGame }: TodoEntryProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        {/* Input Section */}
         <div className="bg-white dark:bg-zinc-800/50 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 p-6 rounded-3xl shadow-xl">
           <form onSubmit={addPending} className="flex flex-col gap-5">
             <div>
@@ -99,7 +95,6 @@ export default function TodoEntry({ onStartGame }: TodoEntryProps) {
           </form>
         </div>
 
-        {/* List Section */}
         <div className="bg-white dark:bg-zinc-800/50 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 p-6 rounded-3xl shadow-xl flex flex-col h-full">
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
                 <span>登録済みタスク</span>

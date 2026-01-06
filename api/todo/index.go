@@ -16,8 +16,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodoHandler(w http.ResponseWriter, r *http.Request) {
-	//context莨晄成縺ｧ繝ｦ繝ｼ繧ｶ繝ｼ蜷阪ｒ縺ゅｉ縺九§繧∽ｻ｣蜈･縺励※縺翫￥
-	// 繧｢繧ｯ繧ｻ繧ｹ蛻ｶ蠕｡縺ｮ縺溘ａ
 	val := r.Context().Value(mdw.UserKey)
 	if val == nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
@@ -31,33 +29,20 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodPost:
-		// Read body to allow potential double-decode or just try Batch format logic
-		// We'll support the new Batch format: { "todos": [ ... ] }
-		// If the frontend sends this, we process it.
-		// NOTE: To support legacy single item (if any), we could verify.
-		// But let's assume we move forward with Batch as primary or just support Batch struct.
 
 		var batchReq dto.CreateTodoBatchRequest
 		if err := json.NewDecoder(r.Body).Decode(&batchReq); err != nil {
-			// If decode fails, maybe it was single? Or bad JSON.
-			// Given user instructions, let's assume we fix frontend same time.
-			// But 'Decode' consumes reader.
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		// If 'todos' is empty, maybe it was a single request { "subject": ... } which resulted in empty 'todos' slice?
-		// Let's handle just the batch for now as requested "Change API".
-
 		responseTodos := make([]dto.TodoResponse, 0)
 
-		// Process loop
 		for _, reqItem := range batchReq.Todos {
 			uuidObj := di.GetUUIDUsecase().GetTodaysUUID()
 			model := reqItem.ToDomain(username, uuidObj.UUID)
 			err := di.GetTodoUsecase().CreateTodo(model)
 			if err != nil {
-				// On error, we stop? Or continue?
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
@@ -67,7 +52,6 @@ func TodoHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		if err := json.NewEncoder(w).Encode(map[string]interface{}{"todos": responseTodos}); err != nil {
-			// log error
 		}
 
 	case http.MethodGet:
