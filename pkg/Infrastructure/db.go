@@ -14,7 +14,7 @@ func NewSupabaseDB() *SupabaseDBProvider {
 type SupabaseDBProvider struct{}
 
 func (p *SupabaseDBProvider) GetDB() *gorm.DB {
-	dsn := os.Getenv("DB_PATH")
+	dsn := os.Getenv("SUPABASE_URL")
 
 	// Disable prepared statements for Supabase Transaction Pooler compatibility
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
