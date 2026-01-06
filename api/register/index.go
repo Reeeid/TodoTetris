@@ -24,7 +24,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Initialize Game Session
-		if err := di.GameUsecase.CreateInitialSession(model.Username); err != nil {
+		if err := di.GetGameUsecase().CreateInitialSession(model.Username); err != nil {
 			// Log error but continue? Or fail?
 			// Since auth is done, maybe just log?
 			// For now let's treat it as internal error but maybe it's better not to block login.
