@@ -563,7 +563,7 @@ export default function TetrisApp({ onGameOver, pendingTodos }: TetrisAppProps) 
        </div>
 
        {/* Mobile-Friendly Control Cluster */}
-       <div className="grid grid-cols-3 gap-4 mt-2 mb-8 w-full max-w-xs px-4">
+       <div className="grid grid-cols-3 gap-2 -mt-32 mb-4 w-full max-w-xs px-4">
            {/* Top Row: Rotations centered or split? Let's put rotations on top corners */}
            <div className="flex flex-col items-center">
                 <button onClick={() => rotate(-1)} className="w-16 h-16 bg-indigo-600 rounded-full shadow-lg active:scale-95 transition flex items-center justify-center">
