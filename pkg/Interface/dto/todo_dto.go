@@ -32,6 +32,7 @@ type UpdateTodoRequest struct {
 	ID          int64  `json:"id"`
 	Subject     string `json:"subject"`
 	Description string `json:"description"`
+	UUID        string `json:"uuid"`
 }
 
 func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
@@ -40,6 +41,7 @@ func (req *UpdateTodoRequest) ToDomain(username string) *model.Todo {
 		UserID:      username,
 		Subject:     req.Subject,
 		Description: req.Description,
+		UUID:        req.UUID,
 	}
 }
 

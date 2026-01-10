@@ -38,7 +38,6 @@ func TetrisHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// 繝励Ξ繧､貂医∩縺九←縺・°縺ｫ縺九°繧上ｉ縺壹∝燕蝗槭・繧ｻ繝・す繝ｧ繝ｳ諠・ｱ繧貞叙蠕励☆繧具ｼ医・繝翫Ν繝・ぅ險育ｮ礼畑・・
 		session, err := di.GetGameUsecase().LoadGame(model)
 
 		res := dto.ToTetrisResponse(status, session)

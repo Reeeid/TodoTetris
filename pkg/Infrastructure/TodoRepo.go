@@ -37,15 +37,18 @@ func (t *TodoRepoImpl) ReadTodo(userID string) ([]model.Todo, error) {
 }
 func (t *TodoRepoImpl) UpdateTodo(todo *model.Todo) (*model.Todo, error) {
 	userID := todo.UserID
-	id := todo.ID
+	uuid := todo.UUID
 	var e entity.Todo
-	if err := t.db.Model(&e).Where("id = ? AND user_id = ?", id, userID).Updates(map[string]string{
+	// Find and update by UUID and UserID
+	// The frontend sends valid UUIDs but ID might be 0, so we rely on UUID
+	if err := t.db.Model(&e).Where("uuid = ? AND user_id = ?", uuid, userID).Updates(map[string]string{
 		"subject":     todo.Subject,
 		"description": todo.Description,
 	}).Error; err != nil {
 		return nil, err
 	}
-	if err := t.db.First(&e, id).Error; err != nil {
+	// Fetch the updated record to return it
+	if err := t.db.Where("uuid = ? AND user_id = ?", uuid, userID).First(&e).Error; err != nil {
 		return nil, err
 	}
 	return e.ToDomain(), nil
